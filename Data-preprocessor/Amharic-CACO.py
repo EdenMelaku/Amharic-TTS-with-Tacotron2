@@ -20,6 +20,8 @@ def preprocess_data(filename):
         with open(filename, "rb") as file:
             for cnt, line, in enumerate(file):
                 append_csv(line)
+                if(count>100000):break
+                
 
     finally:
         file.close()
