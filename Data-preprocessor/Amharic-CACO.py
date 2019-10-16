@@ -9,41 +9,40 @@ count = 0
 def generate_name():
     global filename_initial, count
     number = ""
-    for i in range(5 - len(str(count))):
-        number = number + str(count)
+    for i in range(5 - len(count)):
+        number = number + count
         count += 1
         return filename_initial + "_" + number
 
 
 def preprocess_data(filename):
     try:
-        with open(filename, "r") as file:
+        with open(filename, "rb") as file:
             for cnt, line, in enumerate(file):
                 append_csv(line)
-                print(line)
 
     finally:
         file.close()
 
 
-        def clean_english_letters(line):
-            return re.sub(r"[a-zA-Z]", "", line)
-        
-        
-        def clean_Line(line):
+def clean_english_letters(line):
+    return re.sub(r"[a-zA-Z]", "", line)
+
+
+def clean_Line(line):
     punc_marks = ",?።፣፤፥፦()[]{}/\"\'!$+-"
-    for char in punc_marks:                                                                                                                                                                                                                                                                                                                                                                                                                 
-                                                                                                line = line.replace(char,    "")
+    for char in punc_marks:
+        line = line.replace(char, "")
     return line
 
 
 def append_csv(line):
-    name = generate_name()
-    line = clean_english_letters(line)
-    clean_line = clean_Line(line)
+    name = generate_name().encode()
+    line = clean_english_letters(line).encode()
+    clean_line = clean_Line(line).encode()
     with open("metadata.csv", "wb")as csv_file:
         line_writer = csv.writer(csv_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        line_writer.writerow([name, line, clean_line])
+        line_writer.write_row([name, line, clean_line])
 
 
 if __name__ == "__main__":
