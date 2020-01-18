@@ -9,10 +9,11 @@ count = 0
 def generate_name():
     global filename_initial, count
     number = ""
-    for i in range(5 - len(count)):
-        number = number + count
-        count += 1
-        return filename_initial + "_" + number
+    for i in range(5 - len(str(count))):
+        number = number+"0"
+
+    count += 1
+    return filename_initial + "_" + number+ str(count-1)
 
 
 def preprocess_data(filename):
@@ -20,7 +21,7 @@ def preprocess_data(filename):
         with open(filename, "rb") as file:
             for cnt, line, in enumerate(file):
                 append_csv(line)
-                if(count>100000):break
+                if(count>10):break
                 
 
     finally:
@@ -28,7 +29,7 @@ def preprocess_data(filename):
 
 
 def clean_english_letters(line):
-    return re.sub(r"[a-zA-Z]", "", line)
+    return re.sub(r"[a-zA-Z]", "", line.decode())
 
 
 def clean_Line(line):
@@ -39,12 +40,14 @@ def clean_Line(line):
 
 
 def append_csv(line):
-    name = generate_name().encode()
-    line = clean_english_letters(line).encode()
-    clean_line = clean_Line(line).encode()
-    with open("metadata.csv", "wb")as csv_file:
-        line_writer = csv.writer(csv_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        line_writer.write_row([name, line, clean_line])
+    name = generate_name()
+    line = clean_english_letters(line)
+    clean_line = clean_Line(line)
+    with open("metadata.csv", "a", newline="\n")as csv_file:
+        line_writer = csv.writer(csv_file)
+        line_writer.writerow([name, line, clean_line])
+
+    print(name+"    |"+line)
 
 
 if __name__ == "__main__":
@@ -53,7 +56,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     filename = args.fileLocation
     print(filename)
-    # csv_file=open("metadata.csv","wb")
+    csv_file=open("metadata.csv","w")
     preprocess_data(filename)
 
 
