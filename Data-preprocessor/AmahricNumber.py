@@ -1,3 +1,5 @@
+from re import split
+
 
 class Amharic_Numbers:
     ones=['','አንድ','ሁለት','ሶስት','አራት','አምስት','ስድስት','ሰባት','ስምንት','ዘጠኝ']
@@ -49,6 +51,7 @@ class Amharic_Numbers:
         x=0;
         leng=len(digits)-1
         print("length"+str(leng))
+        i=len(digits)/3
         while(x<=leng) :
             print(x)
             if(x==1):
@@ -66,14 +69,43 @@ class Amharic_Numbers:
 
             x=x+1
 
-        print(s)
+       # print(s)
+        return s
 
     if __name__=="__main__":
         num=231040
-
-
+        units=['','ሺህ', 'ሚሊዮን', 'ቢሊዮን', 'ትሪሊዮን', 'ኳድሪሊዮን']
+        nu="1236831200149"
         
-        num_to_word(num)
+        #num_to_word(num)
+
+        commas=[]
+        unit=0
+        #commas=commas.append(0,len(nu)%3)
+        #print (nu[0:len(nu)%3])
+        s=""
+        if(len(nu)%3!=0):
+         unit+=1+((len(nu)-(len(nu)%3))//3)
+         i=len(nu)%3
+         s=num_to_word(nu[0:len(nu)%3]) +" "+ units[unit-1]
+         unit-=1
+        else:
+            unit=len(nu)//3
+            i=0
+
+        for x in range(unit):
+            if(num_to_word(nu[i:i+3])!=" "):
+             s = s+" "+num_to_word(nu[i:i+3]) + " "+units[unit - 1]
+            unit-=1
+            i+=3
+
+        print(s)
+
+
+
+
+
+
 
 
 
