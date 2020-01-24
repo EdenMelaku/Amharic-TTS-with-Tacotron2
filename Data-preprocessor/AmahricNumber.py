@@ -75,14 +75,11 @@ class Amharic_Numbers:
     if __name__=="__main__":
         num=231040
         units=['','ሺህ', 'ሚሊዮን', 'ቢሊዮን', 'ትሪሊዮን', 'ኳድሪሊዮን']
-        nu="1236831200149"
-        
-        #num_to_word(num)
-
+        nuu="1236831200149"
+        nu="10105090000"
+        n="60,000,678"
         commas=[]
         unit=0
-        #commas=commas.append(0,len(nu)%3)
-        #print (nu[0:len(nu)%3])
         s=""
         if(len(nu)%3!=0):
          unit+=1+((len(nu)-(len(nu)%3))//3)
