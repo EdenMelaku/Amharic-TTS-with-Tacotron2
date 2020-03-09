@@ -9,8 +9,8 @@ class Amharic_Numbers:
     higher = ['', '', 'መቶ', 'ሺህ', 'ሚሊዮን', 'ቢሊዮን', 'ትሪሊዮን', 'ኳድሪሊዮን']
     num = 0
 
-    def __init__(self):
-        num = self
+    def __init__(self, number):
+       self.num = number
 
     def returnOnes(self):
         digits = [int(d) for d in str(self)]
@@ -43,18 +43,18 @@ class Amharic_Numbers:
         while (rev):
             s = self.returnFullNumber() + s
 
-    def num_to_word(number):
+    def num_to_word(self):
         ones = ['', 'አንድ', 'ሁለት', 'ሶስት', 'አራት', 'አምስት', 'ስድስት', 'ሰባት', 'ስምንት', 'ዘጠኝ']
         tenth = ['', 'አስራ', 'ሃያ', 'ሰላሳ', 'አርባ', 'ኃምሳ', 'ስልሳ', 'ሰባ', 'ሰማንያ', 'ዘጠና']
         higher = ['', '', 'መቶ', 'ሺህ', 'ሚሊዮን', 'ቢሊዮን', 'ትሪሊዮን', 'ኳድሪሊዮን']
-        digits = [int(d) for d in str(number)]
+        digits = [int(d) for d in str(self.num)]
         s = '';
         x = 0;
         leng = len(digits) - 1
-        print("length" + str(leng))
+       # print("length" + str(leng))
         i = len(digits) / 3
         while (x <= leng):
-            print(x)
+            #print(x)
             if (x == 1):
                 if (s == ''):
                     if (digits[leng - 1] == 1):
@@ -66,7 +66,7 @@ class Amharic_Numbers:
             else:
                 re = ones[digits[leng - x]]
                 if (digits[leng - x] != 0):
-                    print(ones[digits[leng - x]])
+                   # print(ones[digits[leng - x]])
                     s = re + " " + higher[x] + " " + s
 
             x = x + 1
@@ -74,13 +74,16 @@ class Amharic_Numbers:
         # print(s)
         return s
 
-    def convert_year(year):
-        if (len(year)) < 4:
-            return num_to_word(year)
-        else :
-            return num_to_word(year[0:1]) +" "+num_to_word(year[2:3])
+    def convert_year(self):
 
-    if __name__ == "__main__":
+        if (len(str(self.num))) < 4:
+            return self.num_to_word(self.num)
+        else :
+            n1=Amharic_Numbers(str(self.num)[0:2])
+            n2=Amharic_Numbers(str(self.num)[2:4])
+            return n1.num_to_word() +" "+n2.num_to_word()
+
+if __name__ == "__main__":
         num = 231040
         units = ['', 'ሺህ', 'ሚሊዮን', 'ቢሊዮን', 'ትሪሊዮን', 'ኳድሪሊዮን']
         nuu = "1236831200149"
@@ -89,21 +92,27 @@ class Amharic_Numbers:
         commas = []
         unit = 0
         s = ""
+        obj = Amharic_Numbers(num)
         if (len(nu) % 3 != 0):
             unit += 1 + ((len(nu) - (len(nu) % 3)) // 3)
             i = len(nu) % 3
-            s = num_to_word(nu[0:len(nu) % 3]) + " " + units[unit - 1]
+            n1=nu[0:len(nu) % 3]
+            objj=Amharic_Numbers(n1)
+            s = objj.num_to_word()
+            s+= " " + units[unit - 1]
             unit -= 1
         else:
             unit = len(nu) // 3
             i = 0
 
         for x in range(unit):
-            if (num_to_word(nu[i:i + 3]) != " "):
-                s = s + " " + num_to_word(nu[i:i + 3]) + " " + units[unit - 1]
+            ob=Amharic_Numbers(nu[i:i + 3])
+            if (ob.num_to_word() != " "):
+                s = s + " " + ob.num_to_word() + " " + units[unit - 1]
             unit -= 1
             i += 3
 
         print(s)
         print("###########")
-        print(convert_year(1997))
+        obj1=Amharic_Numbers(1997)
+        print(obj1.convert_year())
