@@ -21,7 +21,7 @@ def preprocess_data(filename):
         with open(filename, "rb") as file:
             for cnt, line, in enumerate(file):
                 append_csv(line)
-                if(count>10):break
+                if(count>200):break
                 
 
     finally:
