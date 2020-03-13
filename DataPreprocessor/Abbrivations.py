@@ -10,10 +10,11 @@ class Abbrivations:
 
     def lookup(self):
         try:
-            with open("abbrivations.csv", "a", newline="\n")as csv_file:
-                    line_reader = csv.reader(csv_file)
-                    r1 = csv.get_dialect(self.abb)
-                    return r1
+            csv_file=csv.reader(open("Abbrivations.csv", "rb"), delimiter=",")
+            for row in csv_file:
+                if(self.abb == row[0]) :
+                    return row[1]
+            return 0
         finally:
             csv_file.close()
 
