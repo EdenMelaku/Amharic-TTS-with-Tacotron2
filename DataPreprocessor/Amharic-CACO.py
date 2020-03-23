@@ -43,7 +43,7 @@ def append_csv(line):
     name = generate_name()
     line = clean_english_letters(line)
     clean_line = clean_Line(line)
-    with open("metadata.csv", "a", newline="\n")as csv_file:
+    with open("../Dataset/metadata.csv", "a", newline="\n")as csv_file:
         line_writer = csv.writer(csv_file)
         line_writer.writerow([name, line, clean_line])
 
@@ -56,7 +56,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     filename = args.fileLocation
     print(filename)
-    csv_file=open("metadata.csv","w")
+    csv_file=open("../Dataset/metadata.csv", "w")
     preprocess_data(filename)
 
 

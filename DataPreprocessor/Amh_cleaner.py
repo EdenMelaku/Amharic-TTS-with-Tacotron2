@@ -1,5 +1,5 @@
 from re import split, match
-from .AmahricNumber import  Amharic_Numbers
+from .AmharicNumber import  Amharic_Numbers
 from .Abbrivations import Abbrivations
 class Cleaner:
     def __init__(self,text):
