@@ -2,6 +2,8 @@ import torch
 from torch import nn
 from math import sqrt
 from .Encoder import Encoder
+from .Decoder import Decoder
+from .Postnet import Postnet
 
 #this section represents the whole tacotron model.
 class Tacotron(nn.module):
