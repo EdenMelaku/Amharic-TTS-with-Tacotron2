@@ -1,10 +1,10 @@
 from torch import nn
 from torch.nn import functional as F
 
-class conv(nn.module):
+class Conv(nn.module):
     def __init__(self, in_channels, out_channels, kernel_size=1, stride=1,
                  padding=None, dilation=1, bias=True, w_init_gain='linear'):
-        super(conv,self).__init__
+        super(Conv,self).__init__
         if padding is None:
             assert (kernel_size%2 == 1)
             padding=int(dilation * (kernel_size - 1)/2)
@@ -23,7 +23,7 @@ class Encoder:
         convolutions=[]
         for i in range(hparams.enoder_n_convolutions)  :
             conv_layer=nn.Sequential(
-                 conv(hparams.encoder_embedding_dim,
+                 Conv(hparams.encoder_embedding_dim,
                             hparams.encoder_embedding_dim,
                             kernel_size=hparams.encoder_kernel_size,stride=1,
                             padding=int((hparams.encoder_kernel_size -1)/2),
