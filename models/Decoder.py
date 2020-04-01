@@ -1,6 +1,9 @@
 import torch.nn as nn
 from .Attention import *
+from torch.autograd import Variable
 from  torch.nn import functional as F
+from .utils import to_gpu, get_mask_from_lengths
+
 
 class Prenet(nn.Module):
     def __init__(self, in_dim, sizes):
