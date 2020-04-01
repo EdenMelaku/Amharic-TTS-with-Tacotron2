@@ -4,7 +4,7 @@ from math import sqrt
 from .Encoder import Encoder
 from .Decoder import Decoder
 from .Postnet import Postnet
-
+from .utils import to_gpu,get_mask_from_lengths
 #this section represents the whole tacotron model.
 class Tacotron(nn.module):
 
