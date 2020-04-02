@@ -4,7 +4,11 @@ from torch.autograd import Variable
 from  torch.nn import functional as F
 from .utils import to_gpu, get_mask_from_lengths
 
-
+'''
+The prediction from the previous time step is first
+passed through a small pre-net containing 2 fully connected layers
+of 256 hidden ReLU units.
+'''
 class Prenet(nn.Module):
     def __init__(self, in_dim, sizes):
         super(Prenet, self).__init__()

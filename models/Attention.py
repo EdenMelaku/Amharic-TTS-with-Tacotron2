@@ -32,7 +32,17 @@ class Location_layer(nn.Module):
         output = output.transpose(1, 2)
         output = self.location_dense(output)
         return output
-
+'''
+We use the location-sensitive attention
+from [21], which extends the additive attention mechanism [22] to
+use cumulative attention weights from previous decoder time steps
+as an additional feature. This encourages the model to move forward
+consistently through the input, mitigating potential failure modes
+where some subsequences are repeated or ignored by the decoder.
+Attention probabilities are computed after projecting inputs and lo-
+cation features to 128-dimensional hidden representations. Location
+features are computed using 32 1-D convolution filters of length 31.
+'''
 class Attention(nn.Module):
     def __init__(self, attention_rnn_dim, embedding_dim, attention_dim,
                  attention_location_n_filters, attention_location_kernel_size):
@@ -51,6 +61,7 @@ class Attention(nn.Module):
 
          processed_query=self.query(query.unsqueeze(1))
          processed_attention=self.location_layer(attention_weights_cat)
+         # additive attention mechanism as stated on the paper
          energies=self.v(torch.tanh(processed_attention+processed_memory+processed_query))
          energies = energies.sueeze(-1)
          return energies
