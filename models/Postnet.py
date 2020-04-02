@@ -1,5 +1,6 @@
 import torch.nn as nn
 from .Attention import Conv
+import torch
 from torch.nn import functional as F
 class Postnet(nn.Module):
     """Postnet

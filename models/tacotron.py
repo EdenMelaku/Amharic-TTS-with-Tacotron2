@@ -5,7 +5,25 @@ from .Encoder import Encoder
 from .Decoder import Decoder
 from .Postnet import Postnet
 from .utils import to_gpu,get_mask_from_lengths
-#this section represents the whole tacotron model.
+#this section represents the whole tacotron model
+
+class Loss(nn.module):
+    def __init__(self):
+        super(Loss, self).__init__()
+    def forward(self,output,targets):
+        mel_target, gate_target = targets[0], targets[1]
+        mel_target.requires_grad = False
+        gate_target.requires_grad = False
+        gate_target = gate_target.view(-1, 1)
+
+        mel_out, mel_out_postnet, gate_out, _ = output
+        gate_out = gate_out.view(-1, 1)
+        mel_loss = nn.MSELoss()(mel_out, mel_target) + \
+                   nn.MSELoss()(mel_out_postnet, mel_target)
+        gate_loss = nn.BCEWithLogitsLoss()(gate_out, gate_target)
+        return mel_loss + gate_loss
+
+
 class Tacotron(nn.module):
 
     def __init__(self, hparams):
