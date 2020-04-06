@@ -13,7 +13,7 @@ from .modules import Embedding
 from .modules import Conv1d1x1, ResidualConv1dGLU, ConvTranspose2d
 from .mixture import sample_from_discretized_mix_logistic
 from .mixture import sample_from_mix_gaussian
-from wavenet_vocoder import upsample
+from  wavenet_vocoder.wavenet_vocoder import upsample
 
 
 def _expand_global_features(B, T, g, bct=True):

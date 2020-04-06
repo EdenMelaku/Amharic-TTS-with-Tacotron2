@@ -1,7 +1,7 @@
 import librosa
 import librosa.filters
 import numpy as np
-from hparams import hparams
+from wavenet_vocoder.hparams import hparams
 from scipy.io import wavfile
 from nnmnkwii import preprocessing as P
 

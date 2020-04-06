@@ -29,11 +29,11 @@ from scipy.io import wavfile
 from torch.utils import data as data_utils
 from torch.nn import functional as F
 
-from wavenet_vocoder.util import is_mulaw_quantize, is_mulaw, is_raw
+from wavenet_vocoder.wavenet_vocoder.util import is_mulaw_quantize, is_mulaw, is_raw
 
 import audio
-from hparams import hparams
-from train import RawAudioDataSource, MelSpecDataSource, PyTorchDataset, _pad_2d
+from wavenet_vocoder.hparams import hparams
+from wavenet_vocoder.train import RawAudioDataSource, MelSpecDataSource, PyTorchDataset, _pad_2d
 from nnmnkwii.datasets import FileSourceDataset
 
 use_cuda = torch.cuda.is_available()

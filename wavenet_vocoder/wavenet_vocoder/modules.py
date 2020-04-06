@@ -5,7 +5,7 @@ import math
 import numpy as np
 
 import torch
-from wavenet_vocoder import conv
+from wavenet_vocoder.wavenet_vocoder import conv
 from torch import nn
 from torch.nn import functional as F
 

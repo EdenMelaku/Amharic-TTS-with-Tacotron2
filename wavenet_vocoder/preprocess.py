@@ -16,7 +16,7 @@ from os.path import join
 from multiprocessing import cpu_count
 from tqdm import tqdm
 import importlib
-from hparams import hparams
+from wavenet_vocoder.hparams import hparams
 
 
 def preprocess(mod, in_dir, out_root, num_workers):
