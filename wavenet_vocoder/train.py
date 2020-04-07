@@ -52,15 +52,15 @@ from tensorboardX import SummaryWriter
 from matplotlib import cm
 from warnings import warn
 
-from wavenet_vocoder.wavenet_vocoder import WaveNet
-from wavenet_vocoder.wavenet_vocoder.util import is_mulaw_quantize, is_mulaw, is_raw, is_scalar_input
-from wavenet_vocoder.wavenet_vocoder.mixture import discretized_mix_logistic_loss
-from wavenet_vocoder.wavenet_vocoder.mixture import sample_from_discretized_mix_logistic
-from wavenet_vocoder.wavenet_vocoder.mixture import mix_gaussian_loss
-from wavenet_vocoder.wavenet_vocoder.mixture import sample_from_mix_gaussian
+from wavenet_vocoder import WaveNet
+from wavenet_vocoder.util import is_mulaw_quantize, is_mulaw, is_raw, is_scalar_input
+from wavenet_vocoder.mixture import discretized_mix_logistic_loss
+from wavenet_vocoder.mixture import sample_from_discretized_mix_logistic
+from wavenet_vocoder.mixture import mix_gaussian_loss
+from wavenet_vocoder.mixture import sample_from_mix_gaussian
 
-import wavenet_vocoder.audio
-from wavenet_vocoder.hparams import hparams, hparams_debug_string
+import audio
+from .wn_hparams import hparams, hparams_debug_string
 
 global_step = 0
 global_test_step = 0

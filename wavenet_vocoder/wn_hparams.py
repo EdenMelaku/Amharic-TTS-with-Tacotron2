@@ -1,4 +1,4 @@
-from wavenet_vocoder.wavenet_vocoder.tfcompat.hparam import  HParams
+from wavenet_vocoder.tfcompat.hparam import  HParams
 import numpy as np
 
 # NOTE: If you want full control for model architecture. please take a look
