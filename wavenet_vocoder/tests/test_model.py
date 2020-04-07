@@ -61,8 +61,16 @@ def test_conv_block():
     print(y.size(), h.size())
 
 
+def test_wavenet_legacy():
+    model = build_compact_model(legacy=True)
+    print(model)
+    x = torch.zeros(16, 256, 1000)
+    y = model(x)
+    print(y.size())
+
+
 def test_wavenet():
-    model = build_compact_model()
+    model = build_compact_model(legacy=False)
     print(model)
     x = torch.zeros(16, 256, 1000)
     y = model(x)
@@ -79,7 +87,7 @@ def _test_data(sr=4000, N=3000, returns_power=False, mulaw=True):
     # For power conditioning wavenet
     if returns_power:
         # (1 x N')
-        p = librosa.feature.rms(x, frame_length=256, hop_length=128)
+        p = librosa.feature.rmse(x, frame_length=256, hop_length=128)
         upsample_factor = x.size // p.size
         # (1 x N)
         p = np.repeat(p, upsample_factor, axis=-1)
@@ -121,12 +129,8 @@ def test_mixture_wavenet():
     assert x.shape[1] == 1
 
     x = torch.from_numpy(x).contiguous().to(device)
+
     c = torch.from_numpy(c).contiguous().to(device)
-
-    # make batch
-    x = x.expand((x.shape[0] * 2, x.shape[1], x.shape[2]))
-    c = c.expand((c.shape[0] * 2, c.shape[1], c.shape[2]))
-
     print(c.size())
 
     model.eval()
@@ -188,7 +192,7 @@ def test_local_conditioning_upsample_correctness():
 
     model = build_compact_model(
         cin_channels=1, upsample_conditional_features=True,
-        upsample_params={"upsample_scales": [2, 2], "cin_channels": 1})
+        upsample_scales=[2, 2])
     assert model.local_conditioning_enabled()
     assert not model.has_speaker_embedding()
 
@@ -291,8 +295,7 @@ def test_global_conditioning_correctness():
 def test_global_and_local_conditioning_correctness():
     x, x_org, c = _test_data(returns_power=True)
     g = c.mean(axis=-1, keepdims=True).astype(np.int)
-    model = build_compact_model(
-        cin_channels=1, gin_channels=16, use_speaker_embedding=True, n_speakers=256)
+    model = build_compact_model(cin_channels=1, gin_channels=16, n_speakers=256)
     assert model.local_conditioning_enabled()
     assert model.has_speaker_embedding()
 
