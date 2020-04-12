@@ -27,10 +27,12 @@ import random
 import numpy as np
 
 import matplotlib
+
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 from wavenet_vocoder import builder
+
 import lrschedule
 
 import torch
@@ -953,9 +955,9 @@ if __name__ == "__main__":
 
     optimizer = optim.Adam(model.parameters(),
                            lr=hparams.initial_learning_rate, betas=(
-        hparams.adam_beta1, hparams.adam_beta2),
-        eps=hparams.adam_eps, weight_decay=hparams.weight_decay,
-        amsgrad=hparams.amsgrad)
+            hparams.adam_beta1, hparams.adam_beta2),
+                           eps=hparams.adam_eps, weight_decay=hparams.weight_decay,
+                           amsgrad=hparams.amsgrad)
 
     if checkpoint_restore_parts is not None:
         restore_parts(checkpoint_restore_parts, model)

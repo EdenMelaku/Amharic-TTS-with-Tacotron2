@@ -54,7 +54,9 @@ if __name__ == "__main__":
     assert hparams.name == "wavenet_vocoder"
 
     print("Sampling frequency: {}".format(hparams.sample_rate))
-
-    assert name in ["cmu_arctic", "ljspeech", "librivox", "jsut"]
+    print(name)
+    assert name in ["cmu_arctic", "ljspeech", "librivox", "jsut","hb_amharic"]
     mod = importlib.import_module(name)
     preprocess(mod, in_dir, out_dir, num_workers)
+
+    #/home/eden/dd/desk/dataset/LJSpeech-1.1
