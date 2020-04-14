@@ -26,11 +26,14 @@ class Prenet(nn.Module):
 class Decoder(nn.Module):
     def __init__(self, hparams):
         super(Decoder,self).__init__()
-        self.prenet=Prenet(hparams.in_dimentions,hparams.prenet_sizes)
+        self.prenet=Prenet(
+            hparams.n_mel_channels * hparams.n_frames_per_step,
+            [hparams.prenet_dim, hparams.prenet_dim])
+
         self.attention_rnn = nn.LSTMCell(
             hparams.prenet_dim + hparams.encoder_embedding_dim,
             hparams.attention_rnn_dim)
-        self.attention_layer = Attention(hparams.attention_rnn_dim,hparams.embedding_dim,hparams.attention_dim,
+        self.attention_layer = Attention(hparams.attention_rnn_dim,hparams.encoder_embedding_dim,hparams.attention_dim,
                                  hparams.attention_location_n_filters,hparams.attention_location_kernel_size)
 
         self.decoder_rnn = nn.LSTMCell(hparams.attention_rnn_dim + hparams.encoder_embedding_dim,

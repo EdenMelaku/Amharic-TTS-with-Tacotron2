@@ -7,7 +7,7 @@ from .Postnet import Postnet
 from .utils import to_gpu,get_mask_from_lengths
 #this section represents the whole tacotron model
 
-class Loss(nn.module):
+class Loss(nn.Module):
     def __init__(self):
         super(Loss, self).__init__()
     def forward(self,output,targets):
@@ -24,7 +24,7 @@ class Loss(nn.module):
         return mel_loss + gate_loss
 
 
-class Tacotron(nn.module):
+class Tacotron(nn.Module):
 
     def __init__(self, hparams):
         super(Tacotron, self).__init__()

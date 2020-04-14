@@ -1,7 +1,7 @@
 from torch import nn
 from torch.nn import functional as F
 
-class Conv(nn.module):
+class Conv(nn.Module):
 
     def __init__(self, in_channels, out_channels, kernel_size=1, stride=1,
                  padding=None, dilation=1, bias=True, w_init_gain='linear'):
@@ -17,12 +17,12 @@ class Conv(nn.module):
         return conv_signal
 
 
-class Encoder:
+class Encoder(nn.Module):
 
     def __init__ (self,hparams):
-        super(hparams).__init__()
+        super(Encoder,self).__init__()
         convolutions=[]
-        for i in range(hparams.enoder_n_convolutions):
+        for i in range(hparams.encoder_n_convolutions):
             conv_layer=nn.Sequential(
                  Conv(hparams.encoder_embedding_dim,
                             hparams.encoder_embedding_dim,
