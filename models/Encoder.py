@@ -9,8 +9,9 @@ class Conv(nn.Module):
         if padding is None:
             assert (kernel_size%2 == 1)
             padding=int(dilation * (kernel_size - 1)/2)
-            self.con=nn.Conv1d(in_channels,out_channels,kernel_size=kernel_size,stride=stride,padding=padding,dilation=dilation,bias=bias)
-            nn.init.xavier_uniform(self.con.weight, gain=nn.init.calculate_gain(w_init_gain))
+        self.con=nn.Conv1d(in_channels,out_channels,kernel_size=kernel_size,stride=stride,padding=padding,dilation=dilation,bias=bias)
+
+        nn.init.xavier_uniform(self.con.weight, gain=nn.init.calculate_gain(w_init_gain))
 
     def forward(self,signal):
         conv_signal=self.con(signal)
@@ -40,7 +41,7 @@ class Encoder(nn.Module):
     def forward(self,x, input_len):
 
         for convl in self.convolutions:
-            x=F.dropout(F.relu(convl(x)), 0.5,  self.traning)
+            x=F.dropout(F.relu(convl(x)), 0.5,  self.training)
 
         x = x.transpose(1, 2)
 

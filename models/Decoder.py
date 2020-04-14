@@ -26,6 +26,16 @@ class Prenet(nn.Module):
 class Decoder(nn.Module):
     def __init__(self, hparams):
         super(Decoder,self).__init__()
+        self.n_mel_channels = hparams.n_mel_channels
+        self.n_frames_per_step = hparams.n_frames_per_step
+        self.encoder_embedding_dim = hparams.encoder_embedding_dim
+        self.attention_rnn_dim = hparams.attention_rnn_dim
+        self.decoder_rnn_dim = hparams.decoder_rnn_dim
+        self.prenet_dim = hparams.prenet_dim
+        self.max_decoder_steps = hparams.max_decoder_steps
+        self.gate_threshold = hparams.gate_threshold
+        self.p_attention_dropout = hparams.p_attention_dropout
+        self.p_decoder_dropout = hparams.p_decoder_dropout
         self.prenet=Prenet(
             hparams.n_mel_channels * hparams.n_frames_per_step,
             [hparams.prenet_dim, hparams.prenet_dim])
