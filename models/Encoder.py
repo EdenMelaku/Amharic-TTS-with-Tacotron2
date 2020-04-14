@@ -5,7 +5,7 @@ class Conv(nn.Module):
 
     def __init__(self, in_channels, out_channels, kernel_size=1, stride=1,
                  padding=None, dilation=1, bias=True, w_init_gain='linear'):
-        super(Conv,self).__init__
+        super(Conv, self).__init__()
         if padding is None:
             assert (kernel_size%2 == 1)
             padding=int(dilation * (kernel_size - 1)/2)
