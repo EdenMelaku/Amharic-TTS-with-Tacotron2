@@ -17,7 +17,7 @@ def create_hparams(hparams_string=None, verbose=False):
         distributed_run=False,
         dist_backend="nccl",
         dist_url="tcp://localhost:54321",
-        cudnn_enabled=True,
+        cudnn_enabled=False,
         cudnn_benchmark=False,
         ignore_layers=['embedding.weight'],
 

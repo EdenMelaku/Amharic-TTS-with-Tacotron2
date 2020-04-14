@@ -14,7 +14,7 @@ from models.tacotron import Tacotron
 from DataPreprocessor.utils import TextMelLoader, TextMelCollate
 from models.tacotron import Loss
 from logger import Tacotron2Logger
-from hparams import create_hparams
+from Tacotron_hparams import create_hparams
 
 
 def reduce_tensor(tensor, n_gpus):
@@ -71,7 +71,11 @@ def prepare_directories_and_logger(output_directory, log_directory, rank):
 
 
 def load_model(hparams):
-    model = Tacotron(hparams).cuda()
+
+    if torch.cuda.is_available():
+        model=Tacotron(hparams).cuda()
+    else:
+         model = Tacotron(hparams).to("cpu")
     if hparams.fp16_run:
         model.decoder.attention_layer.score_mask_value = finfo('float16').min
 
