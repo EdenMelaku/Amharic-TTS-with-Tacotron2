@@ -1,5 +1,8 @@
 import torch
-from stft import STFT
+from .stft import STFT
+from librosa.filters import mel as librosa_mel_fn
+from .audio_processing import dynamic_range_compression
+from .audio_processing import dynamic_range_decompression
 
 class TacotronSTFT(torch.nn.Module):
     def __init__(self, filter_length=1024, hop_length=256, win_length=1024,
