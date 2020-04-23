@@ -6,6 +6,14 @@ def create_hparams(hparams_string=None, verbose=False):
     """Create model hyperparameters. Parse nondefault from given string."""
 
     hparams = tf.contrib.training.HParams(
+
+        ################################
+        # train/test/val percentage     #
+        ################################
+        train = 90,
+        test=5,
+        val = 5,
+
         ################################
         # Experiment Parameters        #
         ################################

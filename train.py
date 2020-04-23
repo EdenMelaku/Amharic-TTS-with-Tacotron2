@@ -13,7 +13,7 @@ from torch.utils.data import DataLoader
 from models.tacotron import Tacotron
 from DataPreprocessor.utils import TextMelLoader, TextMelCollate
 from models.tacotron import Loss
-from logger import Tacotron2Logger
+#from logger import Tacotron2Logger
 from Tacotron_hparams import create_hparams
 
 
@@ -39,10 +39,10 @@ def init_distributed(hparams, n_gpus, rank, group_name):
     print("Done initializing distributed")
 
 
-def prepare_dataloaders(hparams):
+def prepare_dataloaders(data_dir,hparams):
     # Get data, data loaders and collate function ready
-    trainset = TextMelLoader(hparams.training_files, hparams)
-    valset = TextMelLoader(hparams.validation_files, hparams)
+    trainset = TextMelLoader(hparams.training_files, hparams,data_dir)
+    valset = TextMelLoader(hparams.validation_files, hparams,data_dir)
     collate_fn = TextMelCollate(hparams.n_frames_per_step)
 
     if hparams.distributed_run:
@@ -64,7 +64,8 @@ def prepare_directories_and_logger(output_directory, log_directory, rank):
         if not os.path.isdir(output_directory):
             os.makedirs(output_directory)
             os.chmod(output_directory, 0o775)
-        logger = Tacotron2Logger(os.path.join(output_directory, log_directory))
+        #logger = Tacotron2Logger(os.path.join(output_directory, log_directory))
+        logger=None
     else:
         logger = None
     return logger
@@ -147,7 +148,7 @@ def validate(model, criterion, valset, iteration, batch_size, n_gpus,
         logger.log_validation(val_loss, model, y, y_pred, iteration)
 
 
-def train(output_directory, log_directory, checkpoint_path, warm_start, n_gpus,
+def train(output_directory, log_directory,data_directory, checkpoint_path, warm_start, n_gpus,
           rank, group_name, hparams):
     """Training and validation logging results to tensorboard and stdout
 
@@ -184,7 +185,7 @@ def train(output_directory, log_directory, checkpoint_path, warm_start, n_gpus,
     logger = prepare_directories_and_logger(
         output_directory, log_directory, rank)
 
-    train_loader, valset, collate_fn = prepare_dataloaders(hparams)
+    train_loader, valset, collate_fn = prepare_dataloaders(data_directory, hparams)
 
     # Load checkpoint if one exists
     iteration = 0
@@ -262,6 +263,8 @@ if __name__ == '__main__':
                         help='directory to save checkpoints')
     parser.add_argument('-l', '--log_directory', type=str,
                         help='directory to save tensorboard logs')
+    parser.add_argument('-d', '--data_directory', type=str,
+                     help='directory where audio is found')
     parser.add_argument('-c', '--checkpoint_path', type=str, default=None,
                         required=False, help='checkpoint path')
     parser.add_argument('--warm_start', action='store_true',
@@ -286,6 +289,10 @@ if __name__ == '__main__':
     print("Distributed Run:", hparams.distributed_run)
     print("cuDNN Enabled:", hparams.cudnn_enabled)
     print("cuDNN Benchmark:", hparams.cudnn_benchmark)
+    print("output directory" , args.output_directory)
 
-    train(args.output_directory, args.log_directory, args.checkpoint_path,
+    train(args.output_directory, args.log_directory, args.data_directory, args.checkpoint_path,
           args.warm_start, args.n_gpus, args.rank, args.group_name, hparams)
+
+
+# python3 train.py --output_directory /media/eden/Data/Tacotron\ output/outDir/ --log_directory /media/eden/Data/Tacotron\ output/log/ --data_directory /media/eden/Data/dd/desk/dataset/LJSpeech-1.1/wavs/
