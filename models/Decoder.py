@@ -100,7 +100,7 @@ class Decoder(nn.Module):
             B, self.encoder_embedding_dim).zero_())
 
         self.memory = memory
-        self.processed_memory = self.attention_layer.memory_layer(memory)
+        self.processed_memory = self.attention_layer.memory(memory)
         self.mask = mask
 
     def parse_decoder_inputs(self, decoder_inputs):
