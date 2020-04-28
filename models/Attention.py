@@ -67,7 +67,7 @@ class Attention(nn.Module):
          return energies
 
     def forward(self, attention_hidden_state, processed_memory,attention_weights_cat, mask,memory):
-        alignment = self.get_alignment_energies(
+        alignment = self.get_alignments(
             attention_hidden_state, processed_memory, attention_weights_cat)
 
         if mask is not None:
