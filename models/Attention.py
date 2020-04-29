@@ -1,6 +1,6 @@
 import torch.nn as nn
 import torch
-from .Encoder import Conv
+from .Encoder import ConvNorm
 from torch.nn import functional as F
 
 
