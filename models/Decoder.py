@@ -14,7 +14,7 @@ class Prenet(nn.Module):
         super(Prenet, self).__init__()
         in_sizes = [in_dim] + sizes[:-1]
         self.layers = nn.ModuleList(
-            [Linear(in_size, out_size, bias=False)
+            [LinearNorm(in_size, out_size, bias=False)
              for (in_size, out_size) in zip(in_sizes, sizes)])
 
     def forward(self, x):
@@ -24,9 +24,8 @@ class Prenet(nn.Module):
 
 
 class Decoder(nn.Module):
-
     def __init__(self, hparams):
-        super(Decoder,self).__init__()
+        super(Decoder, self).__init__()
         self.n_mel_channels = hparams.n_mel_channels
         self.n_frames_per_step = hparams.n_frames_per_step
         self.encoder_embedding_dim = hparams.encoder_embedding_dim
@@ -38,7 +37,7 @@ class Decoder(nn.Module):
         self.p_attention_dropout = hparams.p_attention_dropout
         self.p_decoder_dropout = hparams.p_decoder_dropout
 
-        self.prenet=Prenet(
+        self.prenet = Prenet(
             hparams.n_mel_channels * hparams.n_frames_per_step,
             [hparams.prenet_dim, hparams.prenet_dim])
 
@@ -46,21 +45,22 @@ class Decoder(nn.Module):
             hparams.prenet_dim + hparams.encoder_embedding_dim,
             hparams.attention_rnn_dim)
 
-        self.attention_layer = Attention(hparams.attention_rnn_dim,hparams.encoder_embedding_dim,hparams.attention_dim,
-                                 hparams.attention_location_n_filters,hparams.attention_location_kernel_size)
+        self.attention_layer = Attention(
+            hparams.attention_rnn_dim, hparams.encoder_embedding_dim,
+            hparams.attention_dim, hparams.attention_location_n_filters,
+            hparams.attention_location_kernel_size)
 
         self.decoder_rnn = nn.LSTMCell(
             hparams.attention_rnn_dim + hparams.encoder_embedding_dim,
             hparams.decoder_rnn_dim, 1)
 
-        self.linear_projection = Linear(
+        self.linear_projection = LinearNorm(
             hparams.decoder_rnn_dim + hparams.encoder_embedding_dim,
             hparams.n_mel_channels * hparams.n_frames_per_step)
 
-        self.gate_layer = Linear(
+        self.gate_layer = LinearNorm(
             hparams.decoder_rnn_dim + hparams.encoder_embedding_dim, 1,
             bias=True, w_init_gain='sigmoid')
-
 
     def get_go_frame(self, memory):
         """ Gets all zeros frames to use as first decoder input
@@ -107,7 +107,7 @@ class Decoder(nn.Module):
             B, self.encoder_embedding_dim).zero_())
 
         self.memory = memory
-        self.processed_memory = self.attention_layer.memory(memory)
+        self.processed_memory = self.attention_layer.memory_layer(memory)
         self.mask = mask
 
     def parse_decoder_inputs(self, decoder_inputs):
@@ -236,45 +236,3 @@ class Decoder(nn.Module):
             mel_outputs, gate_outputs, alignments)
 
         return mel_outputs, gate_outputs, alignments
-
-    def inference(self, memory):
-        """ Decoder inference
-        PARAMS
-        ------
-        memory: Encoder outputs
-
-        RETURNS
-        -------
-        mel_outputs: mel outputs from the decoder
-        gate_outputs: gate outputs from the decoder
-        alignments: sequence of attention weights from the decoder
-        """
-        decoder_input = self.get_go_frame(memory)
-
-        self.initialize_decoder_states(memory, mask=None)
-
-        mel_outputs, gate_outputs, alignments = [], [], []
-        while True:
-            decoder_input = self.prenet(decoder_input)
-            mel_output, gate_output, alignment = self.decode(decoder_input)
-
-            mel_outputs += [mel_output.squeeze(1)]
-            gate_outputs += [gate_output]
-            alignments += [alignment]
-
-            if torch.sigmoid(gate_output.data) > self.gate_threshold:
-                break
-            elif len(mel_outputs) == self.max_decoder_steps:
-                print("Warning! Reached max decoder steps")
-                break
-
-            decoder_input = mel_output
-
-        mel_outputs, gate_outputs, alignments = self.parse_decoder_outputs(
-            mel_outputs, gate_outputs, alignments)
-
-        return mel_outputs, gate_outputs, alignments
-
-
-
-

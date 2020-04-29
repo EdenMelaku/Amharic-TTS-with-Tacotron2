@@ -10,13 +10,14 @@ from .utils import to_gpu,get_mask_from_lengths
 class Loss(nn.Module):
     def __init__(self):
         super(Loss, self).__init__()
-    def forward(self,output,targets):
+
+    def forward(self, model_output, targets):
         mel_target, gate_target = targets[0], targets[1]
         mel_target.requires_grad = False
         gate_target.requires_grad = False
         gate_target = gate_target.view(-1, 1)
 
-        mel_out, mel_out_postnet, gate_out, _ = output
+        mel_out, mel_out_postnet, gate_out, _ = model_output
         gate_out = gate_out.view(-1, 1)
         mel_loss = nn.MSELoss()(mel_out, mel_target) + \
                    nn.MSELoss()(mel_out_postnet, mel_target)
@@ -25,7 +26,6 @@ class Loss(nn.Module):
 
 
 class Tacotron(nn.Module):
-
     def __init__(self, hparams):
         super(Tacotron, self).__init__()
         self.mask_padding = hparams.mask_padding
@@ -43,7 +43,7 @@ class Tacotron(nn.Module):
 
     def parse_batch(self, batch):
         text_padded, input_lengths, mel_padded, gate_padded, \
-        output_lengths = batch
+            output_lengths = batch
         text_padded = to_gpu(text_padded).long()
         input_lengths = to_gpu(input_lengths).long()
         max_len = torch.max(input_lengths.data).item()
@@ -98,4 +98,3 @@ class Tacotron(nn.Module):
             [mel_outputs, mel_outputs_postnet, gate_outputs, alignments])
 
         return outputs
-

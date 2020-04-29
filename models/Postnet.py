@@ -1,5 +1,5 @@
 import torch.nn as nn
-from .Attention import Conv
+from .Encoder import ConvNorm
 import torch
 from torch.nn import functional as F
 
@@ -9,8 +9,8 @@ through a 5-layer convolutional (post-net) which predicts a residual
 to add to the prediction to improve the overall reconstruction.
 '''
 
-class Postnet(nn.Module):
 
+class Postnet(nn.Module):
     """Postnet
         - Five 1-d convolution with 512 channels and kernel size 5
     """
@@ -21,7 +21,7 @@ class Postnet(nn.Module):
 
         self.convolutions.append(
             nn.Sequential(
-                Conv(hparams.n_mel_channels, hparams.postnet_embedding_dim,
+                ConvNorm(hparams.n_mel_channels, hparams.postnet_embedding_dim,
                          kernel_size=hparams.postnet_kernel_size, stride=1,
                          padding=int((hparams.postnet_kernel_size - 1) / 2),
                          dilation=1, w_init_gain='tanh'),
@@ -31,7 +31,7 @@ class Postnet(nn.Module):
         for i in range(1, hparams.postnet_n_convolutions - 1):
             self.convolutions.append(
                 nn.Sequential(
-                    Conv(hparams.postnet_embedding_dim,
+                    ConvNorm(hparams.postnet_embedding_dim,
                              hparams.postnet_embedding_dim,
                              kernel_size=hparams.postnet_kernel_size, stride=1,
                              padding=int((hparams.postnet_kernel_size - 1) / 2),
@@ -41,7 +41,7 @@ class Postnet(nn.Module):
 
         self.convolutions.append(
             nn.Sequential(
-                Conv(hparams.postnet_embedding_dim, hparams.n_mel_channels,
+                ConvNorm(hparams.postnet_embedding_dim, hparams.n_mel_channels,
                          kernel_size=hparams.postnet_kernel_size, stride=1,
                          padding=int((hparams.postnet_kernel_size - 1) / 2),
                          dilation=1, w_init_gain='linear'),
@@ -54,5 +54,4 @@ class Postnet(nn.Module):
         x = F.dropout(self.convolutions[-1](x), 0.5, self.training)
 
         return x
-
 
