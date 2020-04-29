@@ -2,12 +2,18 @@ import torch.nn as nn
 from .Attention import Conv
 import torch
 from torch.nn import functional as F
+
 '''
 the predicted mel spectrogram is passed
 through a 5-layer convolutional (post-net) which predicts a residual
 to add to the prediction to improve the overall reconstruction.
 '''
+
 class Postnet(nn.Module):
+
+    """Postnet
+        - Five 1-d convolution with 512 channels and kernel size 5
+    """
 
     def __init__(self, hparams):
         super(Postnet, self).__init__()
@@ -48,4 +54,5 @@ class Postnet(nn.Module):
         x = F.dropout(self.convolutions[-1](x), 0.5, self.training)
 
         return x
+
 
