@@ -18,14 +18,15 @@ class Linear(nn.Module):
 
 
 class Location_layer(nn.Module):
-    def __init__(self, n_filters,kernel_size,dim):
-        super(Location_layer,self).__init__()
-        padding=int((kernel_size-1)/2)
+    def __init__(self, n_filters, kernel_size, dim):
+        super(Location_layer, self).__init__()
+        padding = int((kernel_size-1) / 2)
         self.location_conv = Conv(2, n_filters,
                                       kernel_size=kernel_size,
                                       padding=padding, bias=False, stride=1,
                                       dilation=1)
-        self.location_dense = Linear(n_filters,dim, bias=False, w_init_gain='tanh')
+        self.location_dense = Linear(n_filters, dim, bias=False,
+                                     w_init_gain='tanh')
 
     def forward(self, attention_weights_cat):
         output = self.location_conv(attention_weights_cat)

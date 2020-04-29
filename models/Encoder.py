@@ -7,23 +7,30 @@ class Conv(nn.Module):
                  padding=None, dilation=1, bias=True, w_init_gain='linear'):
         super(Conv, self).__init__()
         if padding is None:
-            assert (kernel_size%2 == 1)
-            padding=int(dilation * (kernel_size - 1)/2)
-        self.con=nn.Conv1d(in_channels,out_channels,kernel_size=kernel_size,stride=stride,padding=padding,dilation=dilation,bias=bias)
+            assert (kernel_size % 2 == 1)
+            padding = int(dilation * (kernel_size - 1)/2)
 
-        nn.init.xavier_uniform(self.con.weight, gain=nn.init.calculate_gain(w_init_gain))
+        self.con = nn.Conv1d(in_channels, out_channels,
+                           kernel_size=kernel_size, stride=stride,
+                           padding=padding, dilation=dilation,
+                           bias=bias)
 
-    def forward(self,signal):
-        conv_signal=self.con(signal)
+        nn.init.xavier_uniform(self.con.weight,
+                               gain=nn.init.calculate_gain(w_init_gain))
+
+    def forward(self, signal):
+        conv_signal = self.con(signal)
         return conv_signal
 
 
 class Encoder(nn.Module):
 
-    def __init__ (self,hparams):
-        super(Encoder,self).__init__()
-        convolutions=[]
-        for i in range(hparams.encoder_n_convolutions):
+    def __init__ (self, hparams):
+        super(Encoder, self).__init__()
+
+        convolutions = []
+
+        for _ in range(hparams.encoder_n_convolutions):
             conv_layer=nn.Sequential(
                  Conv(hparams.encoder_embedding_dim,
                             hparams.encoder_embedding_dim,
@@ -35,7 +42,9 @@ class Encoder(nn.Module):
 
         self.convolutions = nn.ModuleList(convolutions)
 
-        self.lstm=nn.LSTM(hparams.encoder_embedding_dim, int(hparams.encoder_embedding_dim/2), 1, batch_first=True, bidirectional = True)
+        self.lstm=nn.LSTM(hparams.encoder_embedding_dim,
+                          int(hparams.encoder_embedding_dim/2), 1,
+                          batch_first=True, bidirectional=True)
 
 
     def forward(self,x, input_len):
