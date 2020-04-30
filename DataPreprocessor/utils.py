@@ -111,3 +111,6 @@ class TextMelCollate():
 
         return text_padded, input_lengths, mel_padded, gate_padded, \
             output_lengths
+
+
+
