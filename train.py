@@ -297,3 +297,4 @@ if __name__ == '__main__':
 
 
 # python3 train.py --output_directory /media/eden/Data/Tacotron\ output/outDir/ --log_directory /media/eden/Data/Tacotron\ output/log/ --data_directory /media/eden/Data/dd/desk/dataset/LJSpeech-1.1/wavs/
+# python3 train.py --output_directory /home/eden/TacotronOutput/ --log_directory /home/eden/TacotronOutput/log/  --data_directory /home/eden/LJSpeech-1.1/wavs/
