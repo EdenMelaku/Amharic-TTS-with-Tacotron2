@@ -15,7 +15,7 @@ hyperparameter. Some cleaners are English-specific. You'll typically want to use
 import re
 from unidecode import unidecode
 from .numbers import normalize_numbers
-
+from .Amh_cleaner import Cleaner
 
 # Regular expression matching whitespace:
 _whitespace_re = re.compile(r'\s+')
@@ -86,5 +86,14 @@ def english_cleaners(text):
   text = lowercase(text)
   text = expand_numbers(text)
   text = expand_abbreviations(text)
+  text = collapse_whitespace(text)
+  return text
+
+def amharic_cleaners(text):
+  '''Pipeline for amharic  text, including number and abbreviation expansion.'''
+  clr = Cleaner(text)
+  text= clr.clean()
+  text = convert_to_ascii(text)
+  text = lowercase(text)
   text = collapse_whitespace(text)
   return text

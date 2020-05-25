@@ -33,8 +33,6 @@ class Classifier:
         train_data = data[:train_num]
         test_data = data[train_num:test_num]
         validation_data = data[test_num:val_num]
-        os.chdir("../filelists")
-        os.mkdir(datasetname)
         '''open("../filelists/"+ datasetname + "/train.txt", "w")
         open("../filelists/"+datasetname + "/test.txt", "w")
         open("../filelists/"+datasetname + "/train.txt", "w")
@@ -45,17 +43,17 @@ class Classifier:
         print("number of val data = " + str(len(validation_data)))
         print("######################")
 
-        with open("../filelists/"+datasetname + "/train.txt", "w+") as train:
+        with open("filelists/amharic_audio_text_train_filelist.txt", "w+") as train:
             for i in range(train_num):
                 train.write(train_data[i - 1])
                 train.write("\n")
         train.close()
-        with open("../filelists/"+datasetname + "/test.txt", "w+") as test:
+        with open("filelists/amharic_audio_text_test_filelist.txt", "w+") as test:
             for i in range(len(test_data)):
                 test.write(test_data[i - 1])
                 test.write("\n")
         test.close()
-        with open("../filelists/"+datasetname + "/validation.txt", "w+") as val:
+        with open("filelists/amharic_audio_text_val_filelist.txt", "w+") as val:
             for i in range(len(validation_data)):
                 val.write(validation_data[i - 1])
                 val.write("\n")
