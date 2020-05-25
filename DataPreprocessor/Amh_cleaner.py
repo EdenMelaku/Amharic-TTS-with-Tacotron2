@@ -14,17 +14,16 @@ class Cleaner:
         for word in words:
 
             if any(map(str.isdigit, word)):
-                if (words[i + 1] == "ዓ.ም" or words[i + 1] == "ዓ/ም" or words[i + 1] == "ዓ.ዓ" or words[i + 1] == "ዓ/ዓ"):
-                    text = text + " " + convert_year(word)
+
+
+                if i<(len(words)-1):
+                   if (words[i + 1] == "ዓ.ም" or words[i + 1] == "ዓ/ም" or words[i + 1] == "ዓ.ዓ" or words[i + 1] == "ዓ/ዓ"):
+                      text = text + " " + convert_year(word)
+
+                if (str(word).__contains__('.')):
+                   text += " " + convert_decimals(word)
                 else:
-                    if (words.__contains__("ዓ.ም") or words.__contains__("ዓ/ም") or words.__contains__(
-                            "ዓ.ዓ") or words.__contains__("ዓ/ዓ")):
-                        text = text + " " + convert_year(word)
-                    else:
-                        if (str(word).__contains__('.')):
-                            text += " " + convert_decimals(word)
-                        else:
-                            text = text + " " + convert_number(word)
+                   text = text + " " + convert_number(word)
 
             elif word.__contains__("/") or word.__contains__("."):
 

@@ -1,6 +1,24 @@
 
 import random
 import os
+
+class Text_Analisis:
+    def __init__(self,filepath):
+        with open(filepath, "r") as f:
+            data=f.read().split()
+        from collections import Counter
+        c=Counter(data)
+        count=0
+        for w in data:
+         for  i in w:
+            count+=1
+        print("total number of words "+str(len(data)))
+        print("total number of characters"+str(count))
+        print("total number of unique words "+str(len(c)))
+        print(c)
+    def split(word):
+        return [char for char in word]
+
 class Classifier:
     def __init__(self,hparams, filepath, datasetname):
 

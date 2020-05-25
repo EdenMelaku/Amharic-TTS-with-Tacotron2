@@ -6,7 +6,7 @@ higher = ['', '', 'መቶ', 'ሺህ', 'ሚሊዮን', 'ቢሊዮን', 'ትሪሊ
 
 
 def returnOnes( num):
-    digits = [int(d) for d in str(num)]
+    digits = checkDigit(num)
     s = ''
     for d in digits:
         s = s + " " + ones[d]
@@ -14,7 +14,7 @@ def returnOnes( num):
 
 
 def returnSubNumbers(number):
-    digits = [int(d) for d in str(number)]
+    digits = checkDigit(number)
     s = ''
     if (digits[0] != 0):
         s = s + ones[digits[0] - 1] + " " + higher[0]
@@ -30,17 +30,23 @@ def returnSubNumbers(number):
 
 
 def returnFullNumber(num):
-    digits = [int(d) for d in str(num)]
+    digits = checkDigit(num)
     rev = digits.reverse()
     s = '';
     i = digits.__len__()
     j = 0
     while (rev):
         s = returnFullNumber() + s
-
+def checkDigit(num):
+    dig = [d for d in str(num)]
+    digits = []
+    for d in dig:
+        if (d.isdigit()):
+            digits.append(int(d))
 
 def num_to_word(num):
-    digits = [int(d) for d in str(num)]
+
+    digits=checkDigit(num)
     s = ''
     x = 0
     leng = len(digits) - 1
@@ -61,7 +67,7 @@ def num_to_word(num):
             if (digits[leng - x] != 0):
                 # print(ones[digits[leng - x]])
                 s = re + " " + higher[x] + " " + s
-            # print(s)
+            # printdi(s)
 
         x = x + 1
 
@@ -94,6 +100,7 @@ def convert_number(num):
     unit = 0
     units = ['', 'ሺህ', 'ሚሊዮን', 'ቢሊዮን', 'ትሪሊዮን', 'ኳድሪሊዮን']
     num = num.replace(',', '')
+    s=""
     if (len(num) % 3 != 0):
         unit += 1 + ((len(num) - (len(num) % 3)) // 3)
         i = len(num) % 3
