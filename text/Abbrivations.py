@@ -8,7 +8,7 @@ def lookup(abb):
         for row in csv_reader:
             if (abb == str(row[0])):
                 return str(row[1])
-        return 0
+        return abb
 
 
 def add_abbrivation( abb, word):

@@ -43,10 +43,13 @@ def checkDigit(num):
     for d in dig:
         if (d.isdigit()):
             digits.append(int(d))
+    return digits
 
 def num_to_word(num):
 
     digits=checkDigit(num)
+    #print(num)
+    #print(digits)
     s = ''
     x = 0
     leng = len(digits) - 1
@@ -85,11 +88,12 @@ def convert_year(num):
 
 
 def convert_decimals(num):
-    split_num = str(num).split('.')
+
+    split_num = checkDigit(str(num).split('.'))
     int_part = int(split_num[0])
     decimal_part = split_num[1]
     dec=""
-    if(decimal_part.startswith('0')):
+    if(str(decimal_part).startswith('0')):
         dec=" ዜሮ "
     decimal_part = int(split_num[1])
     text = num_to_word(int_part) + " " + "ነጥብ" + dec+returnOnes(decimal_part)
