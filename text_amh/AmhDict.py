@@ -39,26 +39,30 @@ dictt={ 'ሀ': 'HA',  'ሁ': 'HU',  'ሂ': 'HI',  'ሃ': 'HA', 'ሄ': 'HAE', '�
 
 def convert_to_dict_sentence(sentence): 
     out=''
-
-    for word in sentence: 
-       if(word!=' '):
-          for character in word: 
+    sentence=sentence.split(" ")
+    while sentence:
+         word=sentence.pop(0)
+         for character in word:
                   if(dictt.get(character) is not None): 
-
                      out=out+dictt.get(character)+" "
-       else: 
-        out=out+". "
-    return out
 
+         out=out+". "
+    return out
+from text_amh.amharicSymbols import symbols
 def convert_to_numbers(text):
         dict_text = convert_to_dict_sentence(text)
         finalinput = []
-        from text_amh.amharicSymbols import symbols
-        for ch in dict_text:
-                if (ch == "."):
-                        # space between words were represented with a dot and thier "11" is 0 for our case
-                        finalinput.append(0)
-                else:
-                        # the +1 is for reserving a place for (.) which is a space and represented here as 0
-                        finalinput.append(symbols.index(ch) + 1)
+        current = []
+        values = dict_text.split('.')
+        while values:
+                ch = values.pop(0)
+                for i in ch.split(' '):
+                        if len(i) != 0:
+                                current.append(symbols.index(i))
+                finalinput.extend(current)
+                # To avoid adding a space in the last
+                if values:
+                        finalinput.append(symbols.index(' '))
+                current = []
+
         return finalinput

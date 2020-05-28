@@ -1,11 +1,15 @@
+import re
 from re import split, match
 from .AmharicNumber import convert_year, convert_decimals, convert_number
 from .Abbrivations import lookup
 
 class Cleaner:
+    _whitespace_re = re.compile(r'\s+')
     def __init__(self, text):
-        self.text = text
+        self.text = self.collapse_whitespace(text)
 
+    def collapse_whitespace(self,text):
+        return re.sub(self._whitespace_re, ' ', text)
     def clean(self):
 
         words = split(" ", self.text)
@@ -14,8 +18,6 @@ class Cleaner:
         for word in words:
 
             if any(map(str.isdigit, word)):
-
-
                 if i<(len(words)-1):
                    if (words[i + 1] == "ዓ.ም" or words[i + 1] == "ዓ/ም" or words[i + 1] == "ዓ.ዓ" or words[i + 1] == "ዓ/ዓ"):
                       text = text + " " + convert_year(word)
@@ -29,6 +31,7 @@ class Cleaner:
 
                 text = text + " " + str(lookup(word))
             else:
-                text += " " + word
+                if(len(text)==0):text=word
+                else:text =text+" "+word
             i += 1
-        return text
+        return self.collapse_whitespace(text)

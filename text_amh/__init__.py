@@ -2,7 +2,7 @@
 import re
 from text_amh import cleaners
 from text.symbols import symbols
-from text_amh.AmhDict import convert_to_dict_sentence
+from text_amh.AmhDict import *
 
 
 
@@ -20,10 +20,9 @@ def text_to_sequence(text, cleaner_names):
       List of integers corresponding to the symbols in the text
   '''
   sequence = []
-
-  while len(text):
-      sequence += _symbols_to_sequence(_clean_text(text, cleaner_names))
-
+  print(text)
+  sequence += _symbols_to_sequence(_clean_text(text, cleaner_names))
+  print(sequence)
   return sequence
 
 
@@ -37,6 +36,7 @@ def _clean_text(text, cleaner_names):
 
 
 def _symbols_to_sequence(symbols):
-  return convert_to_dict_sentence(symbols)
+   print(symbols)
+   return convert_to_numbers(symbols)
 
 
