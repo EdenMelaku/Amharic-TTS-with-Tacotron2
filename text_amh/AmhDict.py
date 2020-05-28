@@ -41,7 +41,7 @@ def convert_to_dict_sentence(sentence):
     out=''
 
     for word in sentence: 
-       if(word!=''): 
+       if(word!=' '):
           for character in word: 
                   if(dictt.get(character) is not None): 
 
@@ -49,3 +49,16 @@ def convert_to_dict_sentence(sentence):
        else: 
         out=out+". "
     return out
+
+def convert_to_numbers(text):
+        dict_text = convert_to_dict_sentence(text)
+        finalinput = []
+        from text_amh.amharicSymbols import symbols
+        for ch in dict_text:
+                if (ch == "."):
+                        # space between words were represented with a dot and thier "11" is 0 for our case
+                        finalinput.append(0)
+                else:
+                        # the +1 is for reserving a place for (.) which is a space and represented here as 0
+                        finalinput.append(symbols.index(ch) + 1)
+        return finalinput
