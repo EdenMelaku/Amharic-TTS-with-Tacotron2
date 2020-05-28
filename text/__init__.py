@@ -27,15 +27,18 @@ def text_to_sequence(text, cleaner_names):
   '''
   sequence = []
 
-  # Check for curly braces and treat their contents as ARPAbet:
-  while len(text):
-    m = _curly_re.match(text)
-    if not m:
-      sequence += _symbols_to_sequence(_clean_text(text, cleaner_names))
-      break
-    sequence += _symbols_to_sequence(_clean_text(m.group(1), cleaner_names))
-    sequence += _arpabet_to_sequence(m.group(2))
-    text = m.group(3)
+  # TODO Later, you have to add things that change numbers to letters in the cleaners file. That will remove this need.
+  if 'amharic_cleaners' in cleaner_names:
+    sequence += _clean_text(text, cleaner_names)
+  else:
+    while len(text):
+      m = _curly_re.match(text)
+      if not m:
+        sequence += _symbols_to_sequence(_clean_text(text, cleaner_names))
+        break
+      sequence += _symbols_to_sequence(_clean_text(m.group(1), cleaner_names))
+      sequence += _arpabet_to_sequence(m.group(2))
+      text = m.group(3)
 
   return sequence
 
