@@ -1,5 +1,5 @@
 import tensorflow as tf
-from text import symbols
+from text.amharicSymbols import symbols
 
 
 def create_hparams(hparams_string=None, verbose=False):
@@ -10,9 +10,9 @@ def create_hparams(hparams_string=None, verbose=False):
         ################################
         # train/test/val percentage     #
         ################################
-        train = 90,
-        test=5,
-        val = 5,
+        train = 94,
+        test= 1,
+        val = 4,
 
         ################################
         # Experiment Parameters        #
@@ -33,15 +33,15 @@ def create_hparams(hparams_string=None, verbose=False):
         # Data Parameters             #
         ################################
         load_mel_from_disk=False,
-        training_files='filelists/ljs_audio_text_train_filelist.txt',
-        validation_files='filelists/ljs_audio_text_val_filelist.txt',
-        text_cleaners=['english_cleaners'],
+        training_files='filelists/amharic_audio_text_train_filelist.txt',
+        validation_files='filelists/amharic_audio_text_val_filelist.txt',
+        text_cleaners=['amharic_cleaners'],
 
         ################################
         # Audio Parameters             #
         ################################
         max_wav_value=32768.0,
-        sampling_rate=22050,
+        sampling_rate=44100,
         filter_length=1024,
         hop_length=256,
         win_length=1024,
