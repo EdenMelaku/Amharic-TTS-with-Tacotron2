@@ -17,6 +17,7 @@ from unidecode import unidecode
 from .numbers import normalize_numbers
 from .Amh_cleaner import Cleaner
 from .AmhDict import convert_to_numbers
+from .amharicSymbols import symbols, _EOS
 
 # Regular expression matching whitespace:
 _whitespace_re = re.compile(r'\s+')
@@ -99,6 +100,6 @@ def amharic_cleaners(text):
   #TODO remove the last space.
   if text:
     # last element is 7. For "someword." "it should be the end symbol.
-    text.pop(-1)
+    text[-1] = symbols.index(_EOS)
 
   return text

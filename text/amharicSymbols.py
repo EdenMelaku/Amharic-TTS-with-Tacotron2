@@ -3,8 +3,9 @@ Defines the set of symbols used in text input to the model.
 '''
 
 _pad = '_'
-_punctuation = '።!፣፤? '
 _special = '-'
+_EOS = '~'
+_punctuation = '።!፣፤? '
 _letters = ['HA', 'HU', 'HI', 'HAE', 'H', 'HO', 'LA', 'LU', 'LI', 'LAE', 'L', 'LO', 'LUA', 'HUA', 'ME', 'MU', 'MI',
             'MA', 'MAE', 'M', 'MO', 'MUA', 'SE', 'SU', 'SI', 'SA', 'SAE', 'S', 'SO', 'SUA', 'RE', 'RU', 'RI', 'RA',
             'RAE', 'R', 'RO', 'RUA', 'SHE', 'SHU', 'SHI', 'SHA', 'SHAE', 'SH', 'SHO', 'SHUA', 'QE', 'QU', 'QI', 'QA',
@@ -23,4 +24,4 @@ _letters = ['HA', 'HU', 'HI', 'HAE', 'H', 'HO', 'LA', 'LU', 'LI', 'LAE', 'L', 'L
 
 
 # Export all symbols:
-symbols = [_pad] + list(_special) + list(_punctuation) + list(_letters)
+symbols = list(_pad) + list(_special) + list(_EOS) + list(_punctuation) + list(_letters)

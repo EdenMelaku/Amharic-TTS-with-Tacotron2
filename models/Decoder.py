@@ -236,3 +236,39 @@ class Decoder(nn.Module):
             mel_outputs, gate_outputs, alignments)
 
         return mel_outputs, gate_outputs, alignments
+    def inference(self, memory):
+        """ Decoder inference
+        PARAMS
+        ------
+        memory: Encoder outputs
+        RETURNS
+        -------
+        mel_outputs: mel outputs from the decoder
+        gate_outputs: gate outputs from the decoder
+        alignments: sequence of attention weights from the decoder
+        """
+        decoder_input = self.get_go_frame(memory)
+
+        self.initialize_decoder_states(memory, mask=None)
+
+        mel_outputs, gate_outputs, alignments = [], [], []
+        while True:
+            decoder_input = self.prenet(decoder_input)
+            mel_output, gate_output, alignment = self.decode(decoder_input)
+
+            mel_outputs += [mel_output.squeeze(1)]
+            gate_outputs += [gate_output]
+            alignments += [alignment]
+
+            if torch.sigmoid(gate_output.data) > self.gate_threshold:
+                break
+            elif len(mel_outputs) == self.max_decoder_steps:
+                print("Warning! Reached max decoder steps")
+                break
+
+            decoder_input = mel_output
+
+        mel_outputs, gate_outputs, alignments = self.parse_decoder_outputs(
+            mel_outputs, gate_outputs, alignments)
+
+        return mel_outputs, gate_outputs, alignments
