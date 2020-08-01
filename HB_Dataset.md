@@ -1,6 +1,7 @@
-# HB DATASET
+# HB DATASET (version - 1)
+#### (currently we are working on the completing a full 24hr dataset)
 
-HB DATASET is an Amharic audio dataset. The voice is recorded by Hilina Bizuneh, Elshadie Mekonen, Eden Melaku and Hiwot Ameha.
+HB DATASET is an Amharic audio dataset. The voice is recorded by Hilina Bizuneh, Elshadie Mekonen, Eden Melaku Mulugeta and Hiwot Ameha.
 
 ### Dataset details
 
@@ -8,7 +9,7 @@ language - Amharic
 
 Alphabet - Geez (can be converted to ASCII)
 
-speakers - single 
+number of speakers - 1
 
 recording date - 2020
 
@@ -50,13 +51,13 @@ Average word per audio clip - 15
 
 domain - bible, fiction, news , ......
 
-puctuation - included (if you want to clean script is included in this repo)
+punctuation - included (cleaner script is included in this repo)
 
-numbers(Arabic) - included (if you want to clean script is included in this repo)
+numbers(Arabic) - included (cleaner script is included in this repo)
 
 numbers (geez) -  not included
 
-abbrivations - included (if you want to clean script is included in this repo)
+abbrivations - included (cleaner script is included in this repo)
 
 types of sentences -  declaretive , imperative, questions (around 500) and exclamatory
 
