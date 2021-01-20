@@ -9,11 +9,12 @@ from scipy.io.wavfile import write
 import librosa
 import numpy as np
 import argparse
-
-sr = 22050
-max_wav_value=32768.0
-trim_fft_size = 1024
-trim_hop_size = 256
+from Tacotron_hparams import Create
+hparam = Create()
+sr = hparam.sampling_rate
+max_wav_value = hparam.max_wav_value
+trim_fft_size = hparam.filter_length
+trim_hop_size = hparam.hop_length
 
 # These are control parameters for trimming and skipping
 trim_top_db = 23
@@ -35,7 +36,7 @@ def detect_leading_silence(sound, silence_threshold=-50.0, chunk_size=10):
 
     return trim_ms
 
-def preprocess_audio(file_list, silence_audio_size, pre_emphasis=False, newlocation="new/"):
+def preprocess_audio(file_list, silence_audio_size, pre_emphasis=False, newlocation="new_folder/"):
     for file in file_list:
         data, sampling_rate = librosa.core.load(file, sr)
         data = data / np.abs(data).max() *0.999
@@ -49,8 +50,6 @@ def preprocess_audio(file_list, silence_audio_size, pre_emphasis=False, newlocat
         # print(i.split('/')[-1])
         write(newlocation + file.split('/')[-1], sr, data_)
         #print(len(data),len(data_))
-        if(i%100 == 0):
-            print (i)
 
 def remove_short_audios(file_name):
     f = open(file_name,'r',encoding='utf-8')
@@ -77,6 +76,8 @@ if __name__ == "__main__":
     usage
     python preprocess_dataset.py -f=metadata.csv -s=5 -t -p -r
     python preprocess_dataset.py -f=metadata.csv
+    python trim_audio.py -f /home/mylife/data/HB_DATASET_14999/wav/ -x
+    # TODO Fix the indexing that triggers when accessing arrays with tuples in python3.8. 
     """
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--filelist', type=str,

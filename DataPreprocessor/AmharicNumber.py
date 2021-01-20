@@ -1,5 +1,6 @@
 from re import split
 
+amharic_char = {"፩":"አንድ", "፪":"ሁለት","፫":"ሶስት","፬":"አራት","፭":"አምስት","፮":"ስድስት","፯":"ሰባት","፰":"ስምንት","፱":"ዘጠኝ","፲":"አስር"}
 ones = ['ዜሮ', 'አንድ', 'ሁለት', 'ሶስት', 'አራት', 'አምስት', 'ስድስት', 'ሰባት', 'ስምንት', 'ዘጠኝ']
 tenth = ['', 'አስራ', 'ሃያ', 'ሰላሳ', 'አርባ', 'ኃምሳ', 'ስልሳ', 'ሰባ', 'ሰማንያ', 'ዘጠና']
 higher = ['', '', 'መቶ', 'ሺህ', 'ሚሊዮን', 'ቢሊዮን', 'ትሪሊዮን', 'ኳድሪሊዮን']
@@ -45,9 +46,21 @@ def checkDigit(num):
             digits.append(int(d))
     return digits
 
+def geez_number_processor(num):
+    '''
+    Take a geez number and return a the writing in Amharic.
+
+    Sometimes this is why you code those silly codes. But would I ever write this funciton, 
+    when would i have written this funciton.
+    '''
+    pass
+
 def num_to_word(num):
 
-    digits=checkDigit(num)
+    print(num)
+    # digits=checkDigit(num)
+    if num in amharic_char:
+        digits = amharic_char[num]
     #print(num)
     #print(digits)
     s = ''

@@ -47,6 +47,7 @@ def checkDigit(num):
 
 def num_to_word(num):
 
+    # TODO this doesn't do anything. Checking for isdigit is meaningless.
     digits=checkDigit(num)
     #print(num)
     #print(digits)
@@ -91,11 +92,14 @@ def convert_decimals(num):
 
     split_num = checkDigit(str(num).split('.'))
     int_part = int(split_num[0])
-    decimal_part = split_num[1]
+    decimal_part = ''
+    if len(split_num) >= 2:
+        decimal_part = split_num[1]
     dec=""
     if(str(decimal_part).startswith('0')):
         dec=" ዜሮ "
-    decimal_part = int(split_num[1])
+    if len(split_num) >= 2:
+        decimal_part = split_num[1]
     text = num_to_word(int_part) + " " + "ነጥብ" + dec+returnOnes(decimal_part)
     return text
 

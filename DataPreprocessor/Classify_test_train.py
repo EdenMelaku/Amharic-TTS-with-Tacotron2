@@ -24,6 +24,7 @@ class Classifier:
 
         with open(filepath, "r") as f:
             data = f.read().split('\n')
+        data = list(filter(None, data))
         rows = len(data)
         print(rows)
         random.shuffle(data)
@@ -43,17 +44,17 @@ class Classifier:
         print("number of val data = " + str(len(validation_data)))
         print("######################")
 
-        with open("filelists/amharic_audio_text_train_filelist.txt", "w+") as train:
+        with open("filelists/amharic_audio_text_train_filelist-{}.txt".format(datasetname), "w+") as train:
             for i in range(train_num):
                 train.write(train_data[i - 1])
                 train.write("\n")
         train.close()
-        with open("filelists/amharic_audio_text_test_filelist.txt", "w+") as test:
+        with open("filelists/amharic_audio_text_test_filelist-{}.txt".format(datasetname), "w+") as test:
             for i in range(len(test_data)):
                 test.write(test_data[i - 1])
                 test.write("\n")
         test.close()
-        with open("filelists/amharic_audio_text_val_filelist.txt", "w+") as val:
+        with open("filelists/amharic_audio_text_val_filelist-{}.txt".format(datasetname), "w+") as val:
             for i in range(len(validation_data)):
                 val.write(validation_data[i - 1])
                 val.write("\n")
