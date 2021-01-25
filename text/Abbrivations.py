@@ -5,11 +5,11 @@ def lookup(abb):
     abb = abb.replace(".", "/")
     # print(os.getcwd())
     # os.chdir("../text")
-    with open('text/Abbrivations.csv', encoding='utf-16') as csv_file:
+    '''with open('text/Abbrivations.csv', encoding='utf-16') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
             if (abb == str(row[0])):
-                return str(row[1])
+                return str(row[1])'''
         return abb
 
 
