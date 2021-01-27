@@ -22,7 +22,7 @@ class Cleaner:
                    if (words[i + 1] == "ዓ.ም" or words[i + 1] == "ዓ/ም" or words[i + 1] == "ዓ.ዓ" or words[i + 1] == "ዓ/ዓ"):
                       text = text + " " + convert_year(word)
 
-                if (str(word).__contains__('.')):
+                elif (str(word).__contains__('.')):
                    text += " " + convert_decimals(word)
                 else:
                    text = text + " " + convert_number(word)
