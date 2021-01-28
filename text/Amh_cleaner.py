@@ -17,19 +17,16 @@ class Cleaner:
         i = 0
         for word in words:
 
-            if any(map(str.isdigit, word)):
+             if any(map(str.isdigit, word)):
                 if i<(len(words)-1):
-                   if (words[i + 1] == "ዓ.ም" or words[i + 1] == "ዓ/ም" or words[i + 1] == "ዓ.ዓ" or words[i + 1] == "ዓ/ዓ"):
-                      text = text + " " + convert_year(word)
+                     if (words[i + 1] == "ዓ.ም" or words[i + 1] == "ዓ/ም" or words[i + 1] == "ዓ.ዓ" or words[i + 1] == "ዓ/ዓ"):
+                        text = text + " " + convert_year(word)
+                        continue
 
-                elif (str(word).__contains__('.')):
-                   text += " " + convert_decimals(word)
+                if (str(word).__contains__('.')):
+                       text += " " + convert_decimals(word)
                 else:
-                   text = text + " " + convert_number(word)
-
-            elif word.__contains__("/") or word.__contains__("."):
-
-                text = text + " " + str(lookup(word))
+                       text = text + " " + convert_number(word)
             else:
                 if(len(text)==0):text=word
                 else:text =text+" "+word
