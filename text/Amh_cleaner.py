@@ -27,7 +27,7 @@ class Cleaner:
                        text += " " + convert_decimals(word)
                 else:
                        text = text + " " + convert_number(word)
-            else:
+             else:
                 if(len(text)==0):text=word
                 else:text =text+" "+word
             i += 1
