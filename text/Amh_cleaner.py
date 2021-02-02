@@ -30,5 +30,5 @@ class Cleaner:
              else:
                 if(len(text)==0):text=word
                 else:text =text+" "+word
-            i += 1
+             i += 1
         return self.collapse_whitespace(text)
