@@ -62,7 +62,7 @@ class Create:
         self.n_frames_per_step=1  # currently only 1 is supported
         self.decoder_rnn_dim=1024
         self.prenet_dim=256
-        self.max_decoder_steps=1000
+        self.max_decoder_steps=4000
         self.gate_threshold=0.5
         self.p_attention_dropout=0.1
         self.p_decoder_dropout=0.1
