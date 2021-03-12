@@ -252,6 +252,7 @@ class Decoder(nn.Module):
         self.initialize_decoder_states(memory, mask=None)
 
         mel_outputs, gate_outputs, alignments = [], [], []
+        is_max=False
         while True:
             decoder_input = self.prenet(decoder_input)
             mel_output, gate_output, alignment = self.decode(decoder_input)
@@ -264,11 +265,12 @@ class Decoder(nn.Module):
                 break
             elif len(mel_outputs) == self.max_decoder_steps:
                 print("Warning! Reached max decoder steps")
+                is_max=True
                 break
 
             decoder_input = mel_output
 
-        mel_outputs, gate_outputs, alignments = self.parse_decoder_outputs(
-            mel_outputs, gate_outputs, alignments)
+        mel_outputs, gate_outputs, alignments, is_max= self.parse_decoder_outputs(
+            mel_outputs, gate_outputs, alignments, is_max)
 
         return mel_outputs, gate_outputs, alignments

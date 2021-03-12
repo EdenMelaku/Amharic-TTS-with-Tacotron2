@@ -111,8 +111,11 @@ def batch_inference(sentences):
             torch.from_numpy(sequence)).cuda().long()
 
         mel_outputs, mel_outputs_postnet, _, alignments, is_max = model.inference(sequence)
-        if (len(mel_outputs) == hparams.max_decoder_steps):
+        print(is_max)
+        if (is_max):
             warning += 1
+            print(sentences[i])
+            print(len(sentences[i]))
         if (warning == 3):
             print("the system have encountered processing this sentence ")
             print("#####################################################")

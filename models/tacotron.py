@@ -88,13 +88,13 @@ class Tacotron(nn.Module):
     def inference(self, inputs):
         embedded_inputs = self.embedding(inputs).transpose(1, 2)
         encoder_outputs = self.encoder.inference(embedded_inputs)
-        mel_outputs, gate_outputs, alignments = self.decoder.inference(
+        mel_outputs, gate_outputs, alignments,is_max = self.decoder.inference(
             encoder_outputs)
 
         mel_outputs_postnet = self.postnet(mel_outputs)
         mel_outputs_postnet = mel_outputs + mel_outputs_postnet
-
+        print(is_max)
         outputs = self.parse_output(
-            [mel_outputs, mel_outputs_postnet, gate_outputs, alignments])
+            [mel_outputs, mel_outputs_postnet, gate_outputs, alignments,is_max])
 
         return outputs
