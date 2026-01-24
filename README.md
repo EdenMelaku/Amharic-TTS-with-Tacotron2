@@ -10,8 +10,8 @@ I am inspired by Tacotron implementation by [Keith Ito](https://github.com/keith
 
 We have trained 2 different samples both found in this repo. The difference is how big of training data we have used the initial one was 11 hours and another 27 hours, We have also learned alot from the 11 hours data and made some modifications on how we trained the model.
 
-* 11Hrs -  [Generated Audio Samples/First model(https://github.com/EdenMelaku/Amharic-TTS-with-Tacotron2/tree/master/Generated%20Audio%20Samples/First%20Mode]l)
-* 27Hrs -  [Generated Audio Samples/Latest model](https://github.com/EdenMelaku/Amharic-TTS-with-Tacotron2/tree/master/Generated%20Audio%20Samples/Latest%20Model)
+* 11Hrs -  [Generated Audio Samples/First model](https://github.com/EdenMelaku/Amharic-TTS-with-Tacotron2/tree/master/Generated%20Audio%20Samples/First%20Model)
+* 27Hrs -  [Generated Audio Samples/Latest model](https://github.com/EdenMelaku/Amharic-TTS-with-Tacotron2/tree/master/Generated%20Audio%20Samples/Latest%20model)
 
 Learn more about the experiments here Presentation slide : https://docs.google.com/presentation/d/12fSsCswA2o8gsNEhLTh2XinB8iBfI6l3GoJF5fomQ8w/edit?usp=sharing
 
